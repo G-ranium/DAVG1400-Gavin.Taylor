@@ -9,10 +9,14 @@ public class Program
 
 	public void Main()
 	{
+		//establishes various weapon types
 		cosmicHammer = new Weapon();
 		soulArrow = new Weapon();
 		irradiatedSpear = new Weapon();
 
+		//changes the attributes to each weapon.
+		//Damage adds more damage, defense more defense
+		//range makes it so the heroes/villains can hit from farther away
 		cosmicHammer.damageMultiplier = 5;
 		cosmicHammer.defenseMultiplier = 5;
 		cosmicHammer.range = 1;
@@ -28,6 +32,7 @@ public class Program
 		irradiatedSpear.range = 5;
 		irradiatedSpear.cost = 575.50;
 
+		//finally print out the various attributes to test functionality
 		Console.WriteLine(cosmicHammer.damageMultiplier);
 		Console.WriteLine(cosmicHammer.defenseMultiplier);
 		Console.WriteLine(cosmicHammer.range);
@@ -46,6 +51,7 @@ public class Program
 
 public class Weapon
 {
+    //establishes the different attributes
 	public int damageMultiplier;
 	public int defenseMultiplier;
 	public int range;

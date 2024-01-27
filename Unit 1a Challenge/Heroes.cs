@@ -14,11 +14,17 @@ public class Program
 
 	public void Main()
 	{
+		//create the various heroes
 		heroOne = new Hero();
 		heroTwo = new Hero();
 		heroThree = new Hero();
 		heroFour = new Hero();
 
+		//establishes the attributes of the various heroes
+		//health is how many times they can be hit
+		//defense negates however much damage
+		//flying means they can fly if true
+		//power is how much damage is dealt
 		heroOne.health = 2;
 		heroOne.powerLevel = 5;
 		heroOne.defense = 2;
@@ -39,6 +45,7 @@ public class Program
 		heroThree.defense = 1;
 		heroThree.flying = true;
 
+		//test the various heroes to see if functional
 		Console.WriteLine(heroOne.health);
 		Console.WriteLine(heroOne.powerLevel);
 		Console.WriteLine(heroOne.defense);
@@ -59,6 +66,8 @@ public class Program
 		Console.WriteLine(heroFour.defense);
 		Console.WriteLine(heroFour.flying);
 
+		//same form with villains as with heroes. Establishes
+		//and gives them various attributes
 		villainOne = new Villain();
 		villainTwo = new Villain();
 		villainThree = new Villain();
@@ -84,6 +93,7 @@ public class Program
 		VillainFour.defense = 1;
 		villainFour.flying = true;
 
+		//test functionality
 		Console.WriteLine(villainOne.health);
 		Console.WriteLine(villainOne.powerLevel);
 		Console.WriteLine(villainOne.defense);
@@ -106,6 +116,8 @@ public class Program
 	}
 }
 
+//establish the various attributes for both heroes
+//and villains
 public class Hero
 {
 	public int health;
