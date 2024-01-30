@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,14 +38,19 @@ namespace ConditionalsLab
             {
                 Console.WriteLine("It's hot! Make sure to drink lots of water and to avoid sun exposure for extended periods.");
             }
-            else if (temp <= 30 & temp > 10)
+            else if (temp <= 30 & temp > 20)
             {
                 Console.WriteLine("The weather is pleasant! Enjoy your day!");
             }
-            //anything below like 10 is starting to get cold and will no longer be very pleasant...
+            //new case for chilly between 10 and 20
+            else if (temp <= 20 & temp > 10)
+            {
+                Console.WriteLine("It's getting chilly, maybe you should put on a light jacket.");
+            }
+            //anything else will be too cold
             else
             {
-                Console.WriteLine("It's cold! Make sure to wear a jacket and drink hot cocoa");
+                Console.WriteLine("It's cold! Make sure to wear a coat and drink hot cocoa");
             }
         }
         public void examGrader(int percent)
@@ -78,6 +83,9 @@ namespace ConditionalsLab
         }
         public void favSubject(string subject)
         {
+            //plain and simple switch function. Very easy and straightforward.
+            //any subject noted will have a special note.
+            //if the subject mentioned is not here, the default will give a cute lil note
             switch(subject)
             {
                 case "math":
@@ -100,6 +108,9 @@ namespace ConditionalsLab
                     break;
                 case "band":
                     Console.WriteLine("One day you will be a musician! Keep making wonderful music!");
+                    break;
+                default:
+                    Console.WriteLine("That's a great choice! Use your talents to go far!");
                     break;
 
             }
