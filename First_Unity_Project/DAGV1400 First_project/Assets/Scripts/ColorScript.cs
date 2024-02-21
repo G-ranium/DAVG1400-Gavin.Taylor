@@ -14,10 +14,10 @@ public class ColorScript : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.D))
-            {
-                GetComponent<Renderer>().material.color = Color.red;
-                Debug.Log("Color is red");
-            }
+        {
+            GetComponent<Renderer>().material.color = Color.red;
+            Debug.Log("Color is red");
+        }
         else if (Input.GetKeyDown(KeyCode.A))
         {
             GetComponent<Renderer>().material.color = Color.red;
