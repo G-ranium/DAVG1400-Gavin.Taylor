@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // variables containing sounds and animations
     private Animator playerAnim;
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtSplatter;
@@ -12,6 +13,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRb;
     public AudioClip jumpSound;
     public AudioClip crashSound;
+    
+    // variables to control player movement
     public float jumpForce;
     public float gravityModifier;
     public bool isOnGround = true;
@@ -29,6 +32,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //allows player to jump, when they jump it plays an animation and a sound
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround && !gameOver)
         {
             dirtSplatter.Stop();
@@ -41,11 +45,15 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //detects collision with the ground, they are on the ground
+        //it creates particles
         if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
             dirtSplatter.Play();
         }
+        //if a player collides with an obstacle the game ends and it plays an animation
+        //the player will then be constricted and unable to move
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
             playerAudio.PlayOneShot(crashSound, 1.0f);
