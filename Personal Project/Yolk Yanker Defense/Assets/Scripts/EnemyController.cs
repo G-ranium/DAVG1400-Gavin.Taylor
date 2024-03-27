@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
     public float moveSpeed = 5.0f;
     private Rigidbody enemyRb;
     public GameObject[] eggs;
-    public GameObject player;
+    private GameObject player;
     public int eggIndex;
     public bool eggDestroyed = false;
     public float boundZ = 30f;
@@ -22,6 +22,7 @@ public class EnemyController : MonoBehaviour
         enemyRb = GetComponent<Rigidbody>();
         eggIndex = RandomEgg();
         player = GameObject.Find("Player");
+        eggs = GameObject.FindGameObjectsWithTag("Egg");
     }
 
     // Update is called once per frame

@@ -28,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 78726611376639411}
-  m_LocalRotation: {x: -0, y: -0.6424729, z: -0, w: 0.76630837}
+  m_LocalRotation: {x: 0, y: -0.6424734, z: 0, w: 0.766308}
   m_LocalPosition: {x: 20, y: 0.5, z: -1.3}
   m_LocalScale: {x: 0.5, y: 0.5, z: 2}
   m_ConstrainProportionsScale: 0
@@ -137,7 +137,6 @@ MonoBehaviour:
   - {fileID: 6173037283336028700, guid: 6840ae534cc0751478b26d4876ca346b, type: 3}
   - {fileID: 6925302246723739816, guid: 9fc7e2fde77ba0341a7d5b0242650f38, type: 3}
   - {fileID: 2038716336022269384, guid: 990b7eac5cd389f4ea06c38c2b16783d, type: 3}
-  player: {fileID: 0}
   eggIndex: 0
   eggDestroyed: 0
   boundZ: 30
