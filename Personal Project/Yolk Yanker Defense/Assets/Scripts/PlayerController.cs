@@ -8,9 +8,11 @@ public class PlayerController : MonoBehaviour
 {
     public Vector3 horizontalInput;
     private float turnSpeed = 500f;
+    public GameObject projectile;
     // Start is called before the first frame update
     void Start()
     {
+        
     }
 
     // Update is called once per frame
@@ -20,6 +22,7 @@ public class PlayerController : MonoBehaviour
         horizontalInput.y = Input.GetAxis("Horizontal");
         //horizontalInput.y = Input.GetAxis("Mouse X") + Input.GetAxis("Mouse Y");
         transform.Rotate(horizontalInput * turnSpeed * Time.deltaTime);
+        
     }
     
 }
