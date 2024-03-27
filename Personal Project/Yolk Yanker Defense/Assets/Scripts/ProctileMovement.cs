@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ProctileMovement : MonoBehaviour
 {
+    public float boundY = 20f;
+    public float boundX = 20f;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +16,13 @@ public class ProctileMovement : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.forward * 10 * Time.deltaTime);
+        if (transform.position.y > boundY | transform.position.y < -boundY)
+        {
+            Destroy(gameObject);
+        }
+        if (transform.position.x > boundX | transform.position.x < -boundX)
+        {
+            Destroy(gameObject);
+        }
     }
 }
