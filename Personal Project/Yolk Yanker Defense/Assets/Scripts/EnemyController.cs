@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour
 {
@@ -23,27 +25,40 @@ public class EnemyController : MonoBehaviour
         eggIndex = RandomEgg();
         player = GameObject.Find("Player");
         eggs = GameObject.FindGameObjectsWithTag("Egg");
+        if (eggs.Length == 0)
+        {
+            Debug.Log("Game over!");
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (eggDestroyed)
+        if (eggs.Length > eggIndex)
         {
-            case false:
+            switch (eggDestroyed)
             {
-                transform.LookAt(eggs[eggIndex].transform.position);
-                Vector3 lookDirection = (eggs[eggIndex].transform.position - transform.position).normalized;
-                enemyRb.AddForce(lookDirection * moveSpeed);
-                break;
-            }
-            case true:
-            {
-                Vector3 lookDirection = (player.transform.position - transform.position).normalized;
-                enemyRb.AddForce(-lookDirection * moveSpeed);
-                break;
+                case false:
+                {
+                    transform.LookAt(eggs[eggIndex].transform.position);
+                    Vector3 lookDirection = (eggs[eggIndex].transform.position - transform.position).normalized;
+                    enemyRb.AddForce(lookDirection * moveSpeed);
+                    break;
+                }
+                case true:
+                {
+                    Vector3 lookDirection = (player.transform.position - transform.position).normalized;
+                    enemyRb.AddForce(-lookDirection * moveSpeed);
+                    break;
+                }
             }
         }
+        else
+        {
+            eggIndex = RandomEgg();
+        }
+
         if (transform.position.z > boundZ | transform.position.z < -boundZ)
         {
             Destroy(gameObject);
@@ -56,7 +71,7 @@ public class EnemyController : MonoBehaviour
 
     int RandomEgg()
     {
-        int egg = Random.Range(0, 8);
+        int egg = Random.Range(0, eggs.Length);
         return egg;
     }
 

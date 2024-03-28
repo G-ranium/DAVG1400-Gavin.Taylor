@@ -7,7 +7,7 @@ public class SpawnManager : MonoBehaviour
     public float boundX = 25f;
     public float boundZ = 25f;
     private float startDelay = 2f;
-    private float spawnInterval = 1.5f;
+    private float spawnInterval = 5f;
     public GameObject[] enemyPrefabs;
     // Start is called before the first frame update
     void Start()
@@ -23,9 +23,9 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnRandomEnemy()
     {
-        Vector3 spawnPos = new Vector3(Random.Range(-boundX,boundX), 0, Random.Range(-boundZ,boundZ));
-        int animalIndex = Random.Range(0,enemyPrefabs.Length);
+        Vector3 spawnPos = new Vector3(Random.Range(-boundX,boundX), 0.15f,boundZ);
+        int enemyIndex = Random.Range(0,enemyPrefabs.Length);
             
-        Instantiate(enemyPrefabs[animalIndex], spawnPos, enemyPrefabs[animalIndex].transform.rotation);
+        Instantiate(enemyPrefabs[enemyIndex], spawnPos, enemyPrefabs[enemyIndex].transform.rotation);
     }
 }

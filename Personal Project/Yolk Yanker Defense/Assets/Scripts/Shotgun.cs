@@ -15,13 +15,18 @@ public class Shotgun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            UnityEngine.Quaternion projectileOffset = new UnityEngine.Quaternion(1,1,1,3);
-            UnityEngine.Quaternion minusProjectileOffset = new UnityEngine.Quaternion(1,1,1,-3);
-            Instantiate(projectile, transform.position, (transform.rotation * projectile.transform.rotation * projectileOffset));
-            Instantiate(projectile, transform.position, (transform.rotation * projectile.transform.rotation * minusProjectileOffset));
             Instantiate(projectile, transform.position, (transform.rotation * projectile.transform.rotation));
+            for (int i = 1; i < 5; i++)
+            {
+                Instantiate(projectile, transform.position, (transform.rotation * projectile.transform.rotation * UnityEngine.Quaternion.Euler(Vector3.up * i)));
+            }
+            for (int i = 1; i < 5; i++)
+            {
+                Instantiate(projectile, transform.position, (transform.rotation * projectile.transform.rotation * UnityEngine.Quaternion.Euler(Vector3.down * i)));
+            }
         }
     }
 }
