@@ -5,11 +5,12 @@ using Quaternion = System.Numerics.Quaternion;
 
 public class Shotgun : MonoBehaviour
 {
+    public ParticleSystem muzzleFlash;
     public GameObject projectile;
     // Start is called before the first frame update
     void Start()
     {
-    
+        
     }
 
     // Update is called once per frame
@@ -18,6 +19,7 @@ public class Shotgun : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            muzzleFlash.Play();
             Instantiate(projectile, transform.position, (transform.rotation * projectile.transform.rotation));
             for (int i = 1; i < 5; i++)
             {

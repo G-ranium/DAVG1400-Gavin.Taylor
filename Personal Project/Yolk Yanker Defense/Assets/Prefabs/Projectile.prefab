@@ -125,6 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0824e84a0829e64d9b9ff27d66a16ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundY: 20
-  boundX: 20
+  boundZ: 50
+  boundX: 50
   moveSpeed: 100
