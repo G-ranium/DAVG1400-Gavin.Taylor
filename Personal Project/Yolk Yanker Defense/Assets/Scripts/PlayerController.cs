@@ -7,8 +7,9 @@ using UnityEngine.Assertions.Must;
 public class PlayerController : MonoBehaviour
 {
     public Vector3 horizontalInput;
-    private float turnSpeed = 500f;
-    public GameObject projectile;
+    //private float turnSpeed = 500f;
+    //public GameObject projectile;
+    public GameObject mousePos;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +20,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //uses input from WASD to rotate character
-        horizontalInput.y = Input.GetAxis("Horizontal");
+        //horizontalInput.y = Input.GetAxis("Horizontal");
         //horizontalInput.y = Input.GetAxis("Mouse X") + Input.GetAxis("Mouse Y");
-        transform.Rotate(horizontalInput * turnSpeed * Time.deltaTime);
+        //transform.Rotate(horizontalInput * turnSpeed * Time.deltaTime);
+        transform.LookAt(mousePos.transform.position);
         
     }
     

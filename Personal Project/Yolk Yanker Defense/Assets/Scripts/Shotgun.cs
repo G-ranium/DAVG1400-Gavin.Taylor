@@ -17,7 +17,7 @@ public class Shotgun : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             muzzleFlash.Play();
             Instantiate(projectile, transform.position, (transform.rotation * projectile.transform.rotation));
@@ -30,5 +30,7 @@ public class Shotgun : MonoBehaviour
                 Instantiate(projectile, transform.position, (transform.rotation * projectile.transform.rotation * UnityEngine.Quaternion.Euler(Vector3.down * i)));
             }
         }
+
     }
+
 }
