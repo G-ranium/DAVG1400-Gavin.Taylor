@@ -9,10 +9,11 @@ public class PlayerController : MonoBehaviour
     private float xRange = 15.0f;
     public GameObject laser;
     public GameObject blaster;
+    public Dictionary<string, int> inventory = new Dictionary<string, int>();
     // Start is called before the first frame update
     void Start()
     {
-
+        inventory.Add("PowerUps", 0);
     }
 
     // Update is called once per frame
@@ -39,6 +40,17 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(other.gameObject);
+        if (other.CompareTag("PowerUp"))
+        {
+            Debug.Log("Powerup Collected");
+            Destroy(other.gameObject);
+            inventory["PowerUps"] += 1;
+            print($"Number of powerups: {inventory["PowerUps"]}");
+        }
+        else
+        {
+            Destroy(other.gameObject);
+        }
     }
+    
 }
