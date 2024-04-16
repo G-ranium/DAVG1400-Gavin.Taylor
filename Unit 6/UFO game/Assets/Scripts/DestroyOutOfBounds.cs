@@ -6,12 +6,11 @@ public class DestroyOutOfBounds : MonoBehaviour
 {
     public float topBounds = 30.0f;
     public float lowerBounds = -10.0f;
-    // Start is called before the first frame update
-    void Awake()
-    {
-        //Time.timeScale = 1;
-    }
 
+    void Start()
+    {
+        Time.timeScale = 1;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -21,9 +20,9 @@ public class DestroyOutOfBounds : MonoBehaviour
         }
         else if(transform.position.z < lowerBounds)
         {
+            Time.timeScale = 0;
             Debug.Log("Game Over!");
             Destroy(gameObject);
-            //Time.timeScale = 0;
         }
     }
 }

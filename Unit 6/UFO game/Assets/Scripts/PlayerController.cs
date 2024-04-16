@@ -8,12 +8,15 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput;
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private float xRange = 15.0f;
+
     public GameObject laser;
     public GameObject blaster;
     public GameObject rightBlaster;
     public GameObject leftBlaster;
     public GameObject powerupIndicator;
+
     public Dictionary<string, int> inventory = new Dictionary<string, int>();
+
     private bool powerupOn = false;
     // Start is called before the first frame update
     void Start()
