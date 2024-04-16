@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     private float horizontalInput;
-    private float speed = 5.0f;
-    private float xRange = 15.0f;
+    [SerializeField] private float speed = 5.0f;
+    [SerializeField] private float xRange = 15.0f;
     public GameObject laser;
     public GameObject blaster;
+    public GameObject rightBlaster;
+    public GameObject leftBlaster;
+    public GameObject powerupIndicator;
     public Dictionary<string, int> inventory = new Dictionary<string, int>();
+    private bool powerupOn = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,9 +38,24 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
         }
 
+        if (Input.GetKeyDown(KeyCode.S) && !powerupOn)
+        {
+            if (inventory["PowerUps"] > 0)
+            {
+                powerupIndicator.SetActive(true);
+                powerupOn = true;
+                inventory["PowerUps"]--;
+                StartCoroutine(PowerupTimer());
+            }
+        }
         if(Input.GetKeyDown(KeyCode.Space))
         {
             Instantiate(laser,blaster.transform.position,laser.transform.rotation);
+            if (powerupOn)
+            {
+                Instantiate(laser,rightBlaster.transform.position,rightBlaster.transform.rotation);
+                Instantiate(laser,leftBlaster.transform.position,leftBlaster.transform.rotation);
+            }
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -44,13 +64,21 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Powerup Collected");
             Destroy(other.gameObject);
-            inventory["PowerUps"] += 1;
+            inventory["PowerUps"]++;
             print($"Number of powerups: {inventory["PowerUps"]}");
         }
         else
         {
             Destroy(other.gameObject);
         }
+    }
+    
+    IEnumerator PowerupTimer()
+    {
+        WaitForSeconds timer = new WaitForSeconds(5);
+        yield return timer;
+        powerupIndicator.SetActive(false);
+        powerupOn = false;
     }
     
 }
