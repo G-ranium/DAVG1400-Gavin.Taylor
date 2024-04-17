@@ -14,7 +14,8 @@ public class FollowMouse : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mousePos = new Vector3(Input.mousePosition.x,0,Input.mousePosition.y);
+        mousePos = new Vector3(Input.mousePosition.x,0,Input.mousePosition.y)/20;
+        mousePos.z -= 24.5f;
         transform.position = mousePos;
     }
 }
