@@ -9,16 +9,17 @@ public class DestroyOutOfBounds : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 1;
+        Time.timeScale = 1;//when game starts, time is set to 1 to play
     }
     // Update is called once per frame
     void Update()
     {
+        //if anything is outside of the player's view, destroy
         if(transform.position.z > topBounds)
         {
             Destroy(gameObject);
         }
-        else if(transform.position.z < lowerBounds)
+        else if(transform.position.z < lowerBounds) // if UFO passes player, game ends
         {
             Time.timeScale = 0;
             Debug.Log("Game Over!");

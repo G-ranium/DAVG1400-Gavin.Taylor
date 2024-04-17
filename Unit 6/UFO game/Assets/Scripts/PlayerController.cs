@@ -21,17 +21,19 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //start inventory with 0 powerups
         inventory.Add("PowerUps", 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        //get input to move player
         horizontalInput = Input.GetAxis("Horizontal");
 
         transform.Translate(Vector3.right * speed * horizontalInput * Time.deltaTime);
-
+        
+        //player boundaries, stop player from going to far left or right
         if (transform.position.x < -xRange)
         {
             transform.position = new Vector3(-xRange, transform.position.y, transform.position.z);
@@ -41,7 +43,7 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
         }
 
-        if (Input.GetKeyDown(KeyCode.S) && !powerupOn)
+        if (Input.GetKeyDown(KeyCode.S) && !powerupOn) // s key activates powerup if player has any
         {
             if (inventory["PowerUps"] > 0)
             {
@@ -51,7 +53,7 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(PowerupTimer());
             }
         }
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space)) // fire a shot, three if a powerup is active
         {
             Instantiate(laser,blaster.transform.position,laser.transform.rotation);
             if (powerupOn)
@@ -63,7 +65,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PowerUp"))
+        if (other.CompareTag("PowerUp")) // if the collision is a powerup, add it to the inventory
         {
             Debug.Log("Powerup Collected");
             Destroy(other.gameObject);
@@ -78,7 +80,7 @@ public class PlayerController : MonoBehaviour
     
     IEnumerator PowerupTimer()
     {
-        WaitForSeconds timer = new WaitForSeconds(5);
+        WaitForSeconds timer = new WaitForSeconds(5); //powerup lasts for 5 seconds then is turned off
         yield return timer;
         powerupIndicator.SetActive(false);
         powerupOn = false;
