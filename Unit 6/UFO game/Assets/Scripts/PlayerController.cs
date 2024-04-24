@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,7 +17,13 @@ public class PlayerController : MonoBehaviour
     public GameObject powerupIndicator;
     public GameManager gameManager;
 
+    private AudioSource playerAudio;
+    public AudioClip laserGun;
+    public AudioClip powerUp;
+    public AudioClip powerUpActivated;
+    
     public Dictionary<string, int> inventory = new Dictionary<string, int>();
+    public TextMeshProUGUI powerUpText;
 
     private bool powerupOn = false;
     // Start is called before the first frame update
@@ -25,6 +32,7 @@ public class PlayerController : MonoBehaviour
         //start inventory with 0 powerups
         inventory.Add("PowerUps", 0);
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -49,14 +57,17 @@ public class PlayerController : MonoBehaviour
         {
             if (inventory["PowerUps"] > 0)
             {
+                playerAudio.PlayOneShot(powerUpActivated,0.6f);
                 powerupIndicator.SetActive(true);
                 powerupOn = true;
                 inventory["PowerUps"]--;
+                UpdatePowerUpText();
                 StartCoroutine(PowerupTimer());
             }
         }
         if(Input.GetKeyDown(KeyCode.Space) && gameManager.isGameOver == false) // fire a shot, three if a powerup is active
         {
+            playerAudio.PlayOneShot(laserGun,0.6f);
             Instantiate(laser,blaster.transform.position,laser.transform.rotation);
             if (powerupOn)
             {
@@ -69,10 +80,11 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("PowerUp")) // if the collision is a powerup, add it to the inventory
         {
+            playerAudio.PlayOneShot(powerUp,0.6f);
             Debug.Log("Powerup Collected");
             Destroy(other.gameObject);
             inventory["PowerUps"]++;
-            print($"Number of powerups: {inventory["PowerUps"]}");
+            UpdatePowerUpText();
         }
         else
         {
@@ -88,4 +100,8 @@ public class PlayerController : MonoBehaviour
         powerupOn = false;
     }
     
+    public void UpdatePowerUpText()
+    {
+        powerUpText.text = "POWERUPS: " + inventory["PowerUps"];
+    }
 }

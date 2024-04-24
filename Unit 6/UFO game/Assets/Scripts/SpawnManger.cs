@@ -6,39 +6,43 @@ using UnityEngine.UIElements;
 public class SpawnManger : MonoBehaviour
 {
     public GameObject[] prefabs;
+    public GameObject powerUp;
 
-    private float spawnRange = 17f;
+    private float spawnRange = 12f;
     private float spawnDelay = 2f;
     private float spawnFrequency = 1.5f;
-    private int powerupCounter;
     private int motherShipCounter;
+    private int powerUpCounter;
     // Start is called before the first frame update
     void Start()
     {
         //repeat spawning every 1.5 seconds
         InvokeRepeating("SpawnPrefab", spawnDelay,spawnFrequency);
+        InvokeRepeating("PowerUpSpawner",spawnDelay,spawnFrequency);
     }
 
     void SpawnPrefab()
     {
         int prefabIndex;
-        Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), 1, 20);
-        if (powerupCounter == 3) //spawn a powerup every 3 UFOs
+        Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), 1, 35);
+        if (motherShipCounter == 5) //spawn a mothership when counter is 5
         {
-            prefabIndex = 0;
-            powerupCounter = 0;
-        }
-        else if (motherShipCounter == 5) //spawn a mothership every 5 UFOs
-        {
-            prefabIndex = 3;
+            prefabIndex = 2;
             motherShipCounter = 0;
         }
         else //otherwise just spawn a scout or a normal UFO
         {
-            prefabIndex = Random.Range(1, 3);
-            powerupCounter++;
-            motherShipCounter++;
+            prefabIndex = Random.Range(0, 2);
+            motherShipCounter = Random.Range(0, 10);
         }
         Instantiate(prefabs[prefabIndex], spawnPos, prefabs[prefabIndex].transform.rotation);
+    }
+
+    void PowerUpSpawner()
+    {
+        Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), 1, 35);
+        powerUpCounter = Random.Range(0, 3);
+        if(powerUpCounter == 2)
+            Instantiate(powerUp, spawnPos, powerUp.transform.rotation);
     }
 }

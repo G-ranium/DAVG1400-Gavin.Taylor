@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        gameOverText = GameObject.Find("GameOverText");
+        gameOverText = GameObject.Find("GameOverScreen");
     }
 
     // Update is called once per frame
