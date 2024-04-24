@@ -6,6 +6,7 @@ using UnityEngine;
 public class DetectCollisions : MonoBehaviour
 {
     public ScoreManager scoreManager;
+    public PlayerController playerInv;
     public int scoreToGive;
     private AudioSource enemyAudio;
     public AudioClip enemyDeath;
@@ -15,6 +16,7 @@ public class DetectCollisions : MonoBehaviour
     {
         scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
         enemyAudio = GameObject.Find("Player").GetComponent<AudioSource>();
+        playerInv = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     private void Update()
@@ -29,9 +31,21 @@ public class DetectCollisions : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (CompareTag("SuperPowerUp"))
+        {
+            Destroy(gameObject);
+            Destroy(other.gameObject);
+            enemyAudio.PlayOneShot(enemyDeath);
+            scoreManager.IncreaseScore(scoreToGive);
+            playerInv.inventory["SuperPowerUps"]++;
+            playerInv.UpdatePowerUpText();
+        }
         //subtract 1 health from enemy
-        enemyHealth -= 1;
-        Debug.Log($"Health: {enemyHealth}");
-        Destroy(other.gameObject);
+        else
+        {
+            enemyHealth -= 1;
+            Debug.Log($"Health: {enemyHealth}");
+            Destroy(other.gameObject);
+        }
     }
 }

@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     
     public Dictionary<string, int> inventory = new Dictionary<string, int>();
     public TextMeshProUGUI powerUpText;
+    public TextMeshProUGUI superPowerUpText;
 
     private bool powerupOn = false;
     // Start is called before the first frame update
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         //start inventory with 0 powerups
         inventory.Add("PowerUps", 0);
+        inventory.Add("SuperPowerUps", 0);
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerAudio = GetComponent<AudioSource>();
     }
@@ -65,7 +67,20 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(PowerupTimer());
             }
         }
-        if(Input.GetKeyDown(KeyCode.Space) && gameManager.isGameOver == false) // fire a shot, three if a powerup is active
+
+        if (Input.GetKeyDown(KeyCode.W) && !powerupOn)
+        {
+            if (inventory["SuperPowerUps"] > 0)
+            {
+                playerAudio.PlayOneShot(powerUpActivated,0.6f);
+                powerupIndicator.SetActive(true);
+                powerupOn = true;
+                inventory["SuperPowerUps"]--;
+                UpdatePowerUpText();
+                StartCoroutine(PowerupTimer());
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.Space) && gameManager.isGameOver == false && gameManager.isPaused == false) // fire a shot, three if a powerup is active
         {
             playerAudio.PlayOneShot(laserGun,0.6f);
             Instantiate(laser,blaster.transform.position,laser.transform.rotation);
@@ -81,7 +96,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("PowerUp")) // if the collision is a powerup, add it to the inventory
         {
             playerAudio.PlayOneShot(powerUp,0.6f);
-            Debug.Log("Powerup Collected");
+            //Debug.Log("Powerup Collected");
             Destroy(other.gameObject);
             inventory["PowerUps"]++;
             UpdatePowerUpText();
@@ -103,5 +118,6 @@ public class PlayerController : MonoBehaviour
     public void UpdatePowerUpText()
     {
         powerUpText.text = "POWERUPS: " + inventory["PowerUps"];
+        superPowerUpText.text = "SUPER POWERUPS: " + inventory["SuperPowerUps"];
     }
 }
