@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public GameObject rightBlaster;
     public GameObject leftBlaster;
     public GameObject powerupIndicator;
+    public GameManager gameManager;
 
     public Dictionary<string, int> inventory = new Dictionary<string, int>();
 
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
     {
         //start inventory with 0 powerups
         inventory.Add("PowerUps", 0);
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -53,7 +55,7 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(PowerupTimer());
             }
         }
-        if(Input.GetKeyDown(KeyCode.Space)) // fire a shot, three if a powerup is active
+        if(Input.GetKeyDown(KeyCode.Space) && gameManager.isGameOver == false) // fire a shot, three if a powerup is active
         {
             Instantiate(laser,blaster.transform.position,laser.transform.rotation);
             if (powerupOn)

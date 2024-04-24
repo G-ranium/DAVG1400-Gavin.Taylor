@@ -6,9 +6,11 @@ public class DestroyOutOfBounds : MonoBehaviour
 {
     public float topBounds = 30.0f;
     public float lowerBounds = -10.0f;
+    public GameManager gameManager;
 
     void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         Time.timeScale = 1;//when game starts, time is set to 1 to play
     }
     // Update is called once per frame
@@ -22,7 +24,7 @@ public class DestroyOutOfBounds : MonoBehaviour
         else if(transform.position.z < lowerBounds) // if UFO passes player, game ends
         {
             Time.timeScale = 0;
-            Debug.Log("Game Over!");
+            gameManager.isGameOver = true;
             Destroy(gameObject);
         }
     }
