@@ -224,9 +224,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreManager: {fileID: 0}
+  playerInv: {fileID: 0}
   scoreToGive: 30
   enemyDeath: {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
-  enemyHealth: 10
+  enemyHealth: 12
 --- !u!114 &2091063503804365519
 MonoBehaviour:
   m_ObjectHideFlags: 0

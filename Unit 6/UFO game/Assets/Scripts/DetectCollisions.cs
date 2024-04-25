@@ -31,7 +31,7 @@ public class DetectCollisions : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (CompareTag("SuperPowerUp"))
+        if (CompareTag("SuperPowerUp") && other.CompareTag("Laser"))
         {
             Destroy(gameObject);
             Destroy(other.gameObject);
@@ -41,11 +41,16 @@ public class DetectCollisions : MonoBehaviour
             playerInv.UpdatePowerUpText();
         }
         //subtract 1 health from enemy
-        else
+        else if (other.CompareTag("Laser"))
         {
             enemyHealth -= 1;
-            Debug.Log($"Health: {enemyHealth}");
             Destroy(other.gameObject);
         }
+        else if (other.CompareTag("SuperLaser"))
+        {
+            enemyHealth = 0;
+        }
+        
     }
+    
 }

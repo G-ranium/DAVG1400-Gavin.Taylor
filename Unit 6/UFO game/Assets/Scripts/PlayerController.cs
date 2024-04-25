@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public GameObject rightBlaster;
     public GameObject leftBlaster;
     public GameObject powerupIndicator;
+    public GameObject superLaser;
     public GameManager gameManager;
 
     private AudioSource playerAudio;
@@ -26,7 +27,8 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI powerUpText;
     public TextMeshProUGUI superPowerUpText;
 
-    private bool powerupOn = false;
+    private bool powerUpOn = false;
+    private bool superPowerUpOn = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,36 +57,36 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
         }
 
-        if (Input.GetKeyDown(KeyCode.S) && !powerupOn) // s key activates powerup if player has any
+        if (Input.GetKeyDown(KeyCode.S) && !powerUpOn && !superPowerUpOn) // s key activates powerup if player has any
         {
             if (inventory["PowerUps"] > 0)
             {
                 playerAudio.PlayOneShot(powerUpActivated,0.6f);
                 powerupIndicator.SetActive(true);
-                powerupOn = true;
+                powerUpOn = true;
                 inventory["PowerUps"]--;
                 UpdatePowerUpText();
                 StartCoroutine(PowerupTimer());
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.W) && !powerupOn)
+        if (Input.GetKeyDown(KeyCode.W) && !superPowerUpOn)
         {
             if (inventory["SuperPowerUps"] > 0)
             {
                 playerAudio.PlayOneShot(powerUpActivated,0.6f);
-                powerupIndicator.SetActive(true);
-                powerupOn = true;
+                superLaser.SetActive(true);
+                superPowerUpOn = true;
                 inventory["SuperPowerUps"]--;
                 UpdatePowerUpText();
                 StartCoroutine(PowerupTimer());
             }
         }
-        if(Input.GetKeyDown(KeyCode.Space) && gameManager.isGameOver == false && gameManager.isPaused == false) // fire a shot, three if a powerup is active
+        if(Input.GetKeyDown(KeyCode.Space) && gameManager.isGameOver == false && gameManager.isPaused == false && !superPowerUpOn) // fire a shot, three if a powerup is active
         {
             playerAudio.PlayOneShot(laserGun,0.6f);
             Instantiate(laser,blaster.transform.position,laser.transform.rotation);
-            if (powerupOn)
+            if (powerUpOn)
             {
                 Instantiate(laser,rightBlaster.transform.position,rightBlaster.transform.rotation);
                 Instantiate(laser,leftBlaster.transform.position,leftBlaster.transform.rotation);
@@ -109,10 +111,21 @@ public class PlayerController : MonoBehaviour
     
     IEnumerator PowerupTimer()
     {
-        WaitForSeconds timer = new WaitForSeconds(5); //powerup lasts for 5 seconds then is turned off
-        yield return timer;
-        powerupIndicator.SetActive(false);
-        powerupOn = false;
+        if (superPowerUpOn)
+        {
+            WaitForSeconds timer = new WaitForSeconds(10);  // powerup lasts for 5 seconds then is turned off
+            yield return timer;
+            superLaser.SetActive(false);
+            superPowerUpOn = false;
+        }
+        else
+        {
+            WaitForSeconds timer = new WaitForSeconds(5);
+            yield return timer;
+            powerupIndicator.SetActive(false);
+            powerUpOn = false;
+        }
+
     }
     
     public void UpdatePowerUpText()

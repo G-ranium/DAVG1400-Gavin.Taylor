@@ -46,10 +46,10 @@ public class SpawnManger : MonoBehaviour
     {
         Vector3 spawnPos = new Vector3(Random.Range(-spawnRange, spawnRange), 1, 35);
         Vector3 superSpawnPos = new Vector3(-15, 1, 20);
-        powerUpCounter = Random.Range(0, 10);
-        if (powerUpCounter < 3 && playerInv.inventory["PowerUps"] <= 5)
+        powerUpCounter = Random.Range(0, 100);
+        if (powerUpCounter < 16 && playerInv.inventory["PowerUps"] <= 5)
             Instantiate(powerUp, spawnPos, powerUp.transform.rotation);
-        else if (powerUpCounter == 5 && playerInv.inventory["SuperPowerUps"] < 1)
+        else if (powerUpCounter > 95 && playerInv.inventory["SuperPowerUps"] < 1)
             Instantiate(superPowerUp, superSpawnPos, superPowerUp.transform.rotation);
     }
 }
