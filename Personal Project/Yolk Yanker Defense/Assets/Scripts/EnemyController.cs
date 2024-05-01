@@ -2,22 +2,31 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour
 {
-    public float moveSpeed = 5.0f;
+    public GameManager gameManager;
     private Rigidbody enemyRb;
     public GameObject[] eggs;
     private GameObject player;
-    public int eggIndex;
+
+    private AudioSource enemyAudio;
+    public AudioClip enemyDeath;
+
     public bool eggDestroyed = false;
-    public float boundZ = 30f;
-    public float boundX = 30f;
-    
-    
+    public bool isDead = false;
+
+    public int eggIndex;
+    public int scoreToAdd;
+
+    private float boundZ = 50f;
+    private float boundX = 30f;
+    [SerializeField] private float moveSpeed = 5.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,11 +34,8 @@ public class EnemyController : MonoBehaviour
         eggIndex = RandomEgg();
         player = GameObject.Find("Player");
         eggs = GameObject.FindGameObjectsWithTag("Egg");
-        if (eggs.Length == 0)
-        {
-            Debug.Log("Game over!");
-            Destroy(gameObject);
-        }
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        enemyAudio = GameObject.Find("Player").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -41,15 +47,16 @@ public class EnemyController : MonoBehaviour
             {
                 case false:
                 {
-                    transform.LookAt(eggs[eggIndex].transform.position);
-                    Vector3 lookDirection = (eggs[eggIndex].transform.position - transform.position).normalized;
-                    enemyRb.AddForce(lookDirection * moveSpeed);
+                    Quaternion lookRot = Quaternion.LookRotation(eggs[eggIndex].transform.position - transform.position);
+                    transform.rotation = Quaternion.Euler(0, lookRot.eulerAngles.y, lookRot.eulerAngles.z);
+                    transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
                     break;
                 }
                 case true:
                 {
-                    Vector3 lookDirection = (player.transform.position - transform.position).normalized;
-                    enemyRb.AddForce(-lookDirection * moveSpeed);
+                    Quaternion lookRot = Quaternion.LookRotation(transform.position - player.transform.position);
+                    transform.rotation = Quaternion.Euler(0, lookRot.eulerAngles.y, lookRot.eulerAngles.z);
+                    transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
                     break;
                 }
             }
@@ -67,6 +74,14 @@ public class EnemyController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if (isDead)
+        {
+            Destroy(gameObject);
+            gameManager.score += scoreToAdd;
+            gameManager.UpdateGUI();
+            enemyAudio.PlayOneShot(enemyDeath, 0.5f);
+            isDead = false;
+        }
     }
 
     int RandomEgg()
@@ -82,16 +97,19 @@ public class EnemyController : MonoBehaviour
         {
             if (other.CompareTag("Egg"))
             {
-                Destroy(other.gameObject);
+                other.gameObject.SetActive(false);
                 eggDestroyed = true;
+                gameManager.eggs -= 1;
+                gameManager.UpdateGUI();
             }
         }
 
 
         if (other.CompareTag("Projectile"))
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
             Destroy(other.gameObject);
+            isDead = true;
         }
     }
 }
