@@ -10,7 +10,7 @@ public class ProctileMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { // moves the projectile forward until it hits the edge of the map somewhere
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
         if (transform.position.z > boundZ | transform.position.z < -boundZ)
         {

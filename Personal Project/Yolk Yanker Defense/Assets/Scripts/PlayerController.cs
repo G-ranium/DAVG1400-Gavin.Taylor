@@ -7,8 +7,6 @@ using UnityEngine.Assertions.Must;
 public class PlayerController : MonoBehaviour
 {
     public Vector3 horizontalInput;
-    //private float turnSpeed = 500f;
-    //public GameObject projectile;
 
     public ParticleSystem muzzleFlash;
 
@@ -31,8 +29,8 @@ public class PlayerController : MonoBehaviour
     {
         if(!gameManager.isGameOver && !gameManager.isPaused)
         {
-        transform.LookAt(mousePos.transform.position);
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            transform.LookAt(mousePos.transform.position); //unless game is paused or over, player can rotate in circles
+            if (Input.GetKeyDown(KeyCode.Mouse0)) // with above conditions if mouse is clicked, fire projectiles
             {
                 muzzleFlash.Play();
                 playerAudio.PlayOneShot(gunfire, 0.5f);
@@ -45,7 +43,7 @@ public class PlayerController : MonoBehaviour
                 {
                     Instantiate(projectile, projectileSpawner.transform.position, (projectileSpawner.transform.rotation * projectile.transform.rotation * UnityEngine.Quaternion.Euler(Vector3.down * i)));
                 }
-            }
+            } // one gunshot is fired in the center and the right and left fire various bullets
         }
 
 

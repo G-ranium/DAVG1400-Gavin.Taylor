@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Time.timeScale = 1;
+        Time.timeScale = 1; // make sure the game starts and can move
         isGameOver = false;
     }
 
@@ -40,13 +40,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (eggs < 1)
+        if (eggs < 1) // if this condition is met the game is over
         {
             isGameOver = true;
             EndGame();
         }
 
-        else if (isPaused && Input.GetKeyDown(KeyCode.Escape))
+        else if (isPaused && Input.GetKeyDown(KeyCode.Escape)) // this sets everything still and pulls up menu
         {
             pauseText.gameObject.SetActive(false);
             restartButton.gameObject.SetActive(false);
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
             isPaused = false;
             Time.timeScale = 1;
         }
-        else if (!isGameOver && Input.GetKeyDown(KeyCode.Escape))
+        else if (!isGameOver && Input.GetKeyDown(KeyCode.Escape)) // same thing but the message says game over
         {
             pauseText.gameObject.SetActive(true);
             restartButton.gameObject.SetActive(true);
@@ -64,11 +64,11 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            gameOverText.gameObject.SetActive(false);
+            gameOverText.gameObject.SetActive(false); // if no conditions are met then by default gameover is inactive
         }
     }
 
-    public void EndGame()
+    public void EndGame() // function that freezes everything and pulls up menu
     {
         gameOverText.gameObject.SetActive(true);
         restartButton.gameObject.SetActive(true);
@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    public void UpdateGUI()
+    public void UpdateGUI() // this is for other scripts to communicate and update score/eggs
     {
         scoreText.text = "Score: " + score;
         eggText.text = "Eggs: " + eggs;

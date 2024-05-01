@@ -18,4 +18,4 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
         Debug.Log("Quit Game!");
     }
-}
+} // straight and forward for the buttons, start game starts it and quit quits

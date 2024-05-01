@@ -18,4 +18,4 @@ public class GameOver : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Debug.Log("Game Restarted");
     }
-}
+} //essentially the same as the main menu but takes care of pause and game over screens
